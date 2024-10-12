@@ -1,6 +1,5 @@
 use freya::prelude::Point2D;
 use freya_node_state::Parse;
-use material_colors::color::{Argb, Rgb};
 use skia_safe::Color;
 
 #[derive(Debug, PartialEq, Clone)]
@@ -167,23 +166,6 @@ impl From<Point2D> for Value {
 impl From<(f32, f32)> for Value {
     fn from((x, y): (f32, f32)) -> Self {
         Self::Point(Point2D::new(x, y))
-    }
-}
-
-impl From<Argb> for Value {
-    fn from(value: Argb) -> Self {
-        Self::Color(Color::from_argb(
-            value.alpha,
-            value.red,
-            value.green,
-            value.blue,
-        ))
-    }
-}
-
-impl From<Rgb> for Value {
-    fn from(value: Rgb) -> Self {
-        Self::Color(Color::from_rgb(value.red, value.green, value.blue))
     }
 }
 

@@ -4,17 +4,17 @@ use freya::{
     hooks::{use_platform, UsePlatform},
     prelude::{spawn, use_signal, Readable, Signal, Writable},
 };
-use shared::IndexMap;
-use std::time::Instant;
+use indexmap::IndexMap;
+use std::{hash::Hash, time::Instant};
 
 #[derive(PartialEq)]
-pub struct Context<State: PartialEq> {
+pub struct Context<State: PartialEq + Eq + Hash> {
     init: State,
     states: IndexMap<State, IndexMap<String, Value>>,
     tweens: IndexMap<String, Signal<Tween>>,
 }
 
-impl<State: PartialEq> Context<State> {
+impl<State: PartialEq + Eq + Hash> Context<State> {
     pub fn new(init: State, states: IndexMap<State, IndexMap<String, Value>>) -> Self {
         Self {
             init,
@@ -59,13 +59,13 @@ impl State {
     }
 }
 
-pub struct TransitionBuilder<S: PartialEq> {
+pub struct TransitionBuilder<S: PartialEq + Eq + Hash> {
     init: S,
     properties: IndexMap<String, (u64, Curve)>,
     states: IndexMap<S, IndexMap<String, Value>>,
 }
 
-impl<S: PartialEq> TransitionBuilder<S> {
+impl<S: PartialEq + Eq + Hash> TransitionBuilder<S> {
     pub fn new(init: S) -> Self {
         Self {
             init,
@@ -129,7 +129,7 @@ impl<S: PartialEq> TransitionBuilder<S> {
 }
 
 #[derive(PartialEq, Clone, Copy)]
-pub struct Transition<S: PartialEq + 'static> {
+pub struct Transition<S: PartialEq + Eq + Hash + 'static> {
     context: Signal<Context<S>>,
     is_running: Signal<bool>,
     has_run_yet: Signal<bool>,
@@ -137,7 +137,7 @@ pub struct Transition<S: PartialEq + 'static> {
     task: Signal<Option<Task>>,
 }
 
-impl<S: PartialEq> Transition<S> {
+impl<S: PartialEq + Eq + Hash> Transition<S> {
     pub fn builder(init: S) -> TransitionBuilder<S> {
         TransitionBuilder::new(init)
     }
@@ -233,7 +233,7 @@ impl<S: PartialEq> Transition<S> {
 }
 
 pub fn use_transition<
-    State: PartialEq + 'static,
+    State: PartialEq + Eq + Hash + 'static,
     K: Into<String>,
     V: Into<Value>,
     Map: IntoIterator<Item = (K, V)>,

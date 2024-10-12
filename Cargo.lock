@@ -1843,6 +1843,7 @@ version = "0.1.0"
 dependencies = [
  "freya",
  "freya-node-state",
+ "indexmap",
  "skia-safe",
 ]
 

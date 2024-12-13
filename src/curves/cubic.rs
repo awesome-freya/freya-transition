@@ -11,6 +11,10 @@ pub struct Cubic {
 impl Cubic {
     pub const CUBIC_ERROR_BOUND: f32 = 0.001;
 
+    pub const fn new(a: f32, b: f32, c: f32, d: f32) -> Self {
+        Self { a, b, c, d }
+    }
+
     fn _evaluate_cubic(a: f32, b: f32, m: f32) -> f32 {
         (3.0 * a * (1.0 - m).powi(2)).mul_add(m, 3.0 * b * (1.0 - m) * m.powi(2)) + m.powi(3)
     }

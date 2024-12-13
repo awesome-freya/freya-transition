@@ -6,7 +6,10 @@ mod interval;
 mod linear;
 mod saw_tooth;
 mod split;
+mod three_point_cubic;
 mod threshold;
+
+use three_point_cubic::ThreePointCubic;
 
 pub use self::{
     bounce::{BounceInCurve, BounceInOutCurve, BounceOutCurve},
@@ -45,6 +48,7 @@ pub enum Curve {
     None,
     Linear(Linear),
     Cubic(Cubic),
+    ThreePointCubic(ThreePointCubic),
     Threshold(Threshold),
     SawTooth(SawTooth),
     BounceIn(BounceInCurve),
@@ -61,13 +65,13 @@ impl Curve {
     pub const LINEAR: Self = Self::Linear(Linear);
     pub const DECELERATE: Self = Self::Decelerate(DecelerateCurve);
     pub const FAST_LINEAR_TO_SLOW_EASE_IN: Self = Self::cubic(0.18, 1.0, 0.04, 1.0);
-    //   pub const fastEaseInToSlowEaseOut: Curve = ThreePointCubic(
-    //     Offset(0.056, 0.024),
-    //     Offset(0.108, 0.3085),
-    //     Offset(0.198, 0.541),
-    //     Offset(0.3655, 1.0),
-    //     Offset(0.5465, 0.989),
-    //   );
+    pub const FAST_EASE_IN_TO_SLOW_EASE_OUT: Self = Self::three_point_cubic(
+        (0.056, 0.024),
+        (0.108, 0.3085),
+        (0.198, 0.541),
+        (0.3655, 1.0),
+        (0.5465, 0.989),
+    );
     pub const EASE: Self = Self::cubic(0.25, 0.1, 0.25, 1.0);
     pub const EASE_IN: Self = Self::cubic(0.42, 0.0, 1.0, 1.0);
     pub const EASE_IN_TO_LINEAR: Self = Self::cubic(0.67, 0.03, 0.65, 0.09);
@@ -93,11 +97,13 @@ impl Curve {
     pub const EASE_IN_OUT_SINE: Self = Self::cubic(0.445, 0.05, 0.55, 0.95);
     pub const EASE_IN_OUT_QUAD: Self = Self::cubic(0.455, 0.03, 0.515, 0.955);
     pub const EASE_IN_OUT_CUBIC: Self = Self::cubic(0.645, 0.045, 0.355, 1.0);
-    //   static const ThreePointCubic easeInOutCubicEmphasized = ThreePointCubic(
-    //       Offset(0.05, 0), Offset(0.133333, 0.06),
-    //       Offset(0.166666, 0.4),
-    //       Offset(0.208333, 0.82), Offset(0.25, 1),
-    //   );
+    pub const EASE_IN_OUT_CUBIC_EMPHASIZED: Self = Self::three_point_cubic(
+        (0.05, 0.0),
+        (0.133333, 0.06),
+        (0.166666, 0.4),
+        (0.208333, 0.82),
+        (0.25, 1.0),
+    );
     pub const EASE_IN_OUT_QUART: Self = Self::cubic(0.77, 0.0, 0.175, 1.0);
     pub const EASE_IN_OUT_QUINT: Self = Self::cubic(0.86, 0.0, 0.07, 1.0);
     pub const EASE_IN_OUT_EXPO: Self = Self::cubic(1.0, 0.0, 0.0, 1.0);
@@ -113,8 +119,19 @@ impl Curve {
     pub const ELASTIC_IN_OUT: Self = Self::ElasticInOut(ElasticInOutCurve::default());
 
     #[must_use]
+    pub const fn three_point_cubic(
+        a1: (f32, f32),
+        b1: (f32, f32),
+        midpoint: (f32, f32),
+        a2: (f32, f32),
+        b2: (f32, f32),
+    ) -> Self {
+        Self::ThreePointCubic(ThreePointCubic::new(a1, b1, midpoint, a2, b2))
+    }
+
+    #[must_use]
     pub const fn cubic(a: f32, b: f32, c: f32, d: f32) -> Self {
-        Self::Cubic(Cubic { a, b, c, d })
+        Self::Cubic(Cubic::new(a, b, c, d))
     }
 
     #[must_use]
@@ -134,6 +151,7 @@ impl ParametricCurve<f32> for Curve {
             Self::None => unimplemented!(),
             Self::Linear(curve) => curve.transform_internal(t),
             Self::Cubic(curve) => curve.transform_internal(t),
+            Self::ThreePointCubic(curve) => curve.transform_internal(t),
             Self::Threshold(curve) => curve.transform_internal(t),
             Self::SawTooth(curve) => curve.transform_internal(t),
             Self::BounceIn(curve) => curve.transform_internal(t),

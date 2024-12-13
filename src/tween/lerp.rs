@@ -42,4 +42,3 @@ impl Lerp for Value {
         }
     }
 }
-

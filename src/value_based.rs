@@ -44,7 +44,10 @@ pub struct Transition {
 impl Transition {
     pub fn set<K: AsRef<str>, V: Into<Value>>(&self, key: K, value: V) {
         let context = self.context.peek();
-        let mut tween = *context.tweens.get(key.as_ref()).unwrap_or_else(|| panic!("failed to get tween with {} name", key.as_ref()));
+        let mut tween = *context
+            .tweens
+            .get(key.as_ref())
+            .unwrap_or_else(|| panic!("failed to get tween with {} name", key.as_ref()));
 
         tween.write().to(value.into());
     }
@@ -90,7 +93,10 @@ impl Transition {
         self.run::<_, _, Vec<(&str, f32)>>(None)
     }
 
-    pub fn play<K: Into<String> + Hash + Eq, V: Into<Value>, I: IntoIterator<Item = (K, V)>>(&self, filter: I) {
+    pub fn play<K: Into<String> + Hash + Eq, V: Into<Value>, I: IntoIterator<Item = (K, V)>>(
+        &self,
+        filter: I,
+    ) {
         self.run(Some(filter))
     }
 
@@ -102,7 +108,10 @@ impl Transition {
         };
     }
 
-    fn run<K: Into<String> + Hash + Eq, V: Into<Value>, I: IntoIterator<Item = (K, V)>>(&self, filter: Option<I>) {
+    fn run<K: Into<String> + Hash + Eq, V: Into<Value>, I: IntoIterator<Item = (K, V)>>(
+        &self,
+        filter: Option<I>,
+    ) {
         let ctx = self.context.peek();
         let platform = self.platform;
         let mut is_running = self.is_running;

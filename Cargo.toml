@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-freya = { git = "https://github.com/marc2332/freya.git", branch = "feat/dioxus-0.6" }
-freya-node-state = { git = "https://github.com/marc2332/freya.git", branch = "feat/dioxus-0.6" }
+freya = { git = "https://github.com/marc2332/freya.git" }
+freya-node-state = { git = "https://github.com/marc2332/freya.git" }
 indexmap = "2.6.0"
 skia-safe = "0.80"

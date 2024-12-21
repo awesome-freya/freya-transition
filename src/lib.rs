@@ -1,3 +1,4 @@
+pub mod animation;
 pub mod curves;
 pub mod state_based;
 pub mod tween;

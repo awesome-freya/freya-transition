@@ -1,6 +1,6 @@
 use super::ParametricCurve;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct Threshold {
     pub(super) threshold: f32,
 }

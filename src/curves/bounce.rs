@@ -18,7 +18,7 @@ fn _bounce(mut t: f32) -> f32 {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct BounceInCurve;
 
 impl ParametricCurve<f32> for BounceInCurve {
@@ -27,7 +27,7 @@ impl ParametricCurve<f32> for BounceInCurve {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct BounceOutCurve;
 
 impl ParametricCurve<f32> for BounceOutCurve {
@@ -36,7 +36,7 @@ impl ParametricCurve<f32> for BounceOutCurve {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct BounceInOutCurve;
 
 impl ParametricCurve<f32> for BounceInOutCurve {

@@ -1,6 +1,6 @@
 use super::{Cubic, ICurve, ParametricCurve};
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct Offset {
     dx: f32,
     dy: f32,
@@ -18,7 +18,7 @@ impl From<(f32, f32)> for Offset {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct ThreePointCubic {
     a1: Offset,
     b1: Offset,

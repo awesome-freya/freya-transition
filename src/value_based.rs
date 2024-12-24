@@ -30,6 +30,27 @@ impl Context {
             ),
         );
     }
+
+    pub fn add_tween_delayed<K: Into<String>, V: Into<Value>>(
+        &mut self,
+        key: K,
+        value: V,
+        curve: Curve,
+        duration: u64,
+        delay: u64,
+    ) {
+        let value = value.into();
+
+        self.tweens.insert(
+            key.into(),
+            Signal::new(
+                Tween::new(value.clone(), value)
+                    .curve(curve)
+                    .duration(duration)
+                    .delay(delay),
+            ),
+        );
+    }
 }
 
 #[derive(PartialEq, Clone, Copy)]

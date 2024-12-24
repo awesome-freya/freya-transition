@@ -11,6 +11,7 @@ pub struct Tween {
     pub destination: Value,
     pub value: Value,
     pub duration: f32,
+    pub delay: f32,
     pub curve: Curve,
 }
 
@@ -22,6 +23,7 @@ impl Tween {
             destination,
             value: origin,
             duration: 0.0,
+            delay: 0.0,
             curve: Curve::LINEAR,
         }
     }
@@ -55,19 +57,28 @@ impl Tween {
     }
 
     #[must_use]
+    pub const fn delay(mut self, millis: u64) -> Self {
+        self.delay = millis as f32;
+
+        self
+    }
+
+    #[must_use]
     pub const fn is_done(&self, time: u128) -> bool {
-        time >= self.duration as u128
+        time >= (self.delay + self.duration) as u128
     }
 
     pub fn advance(&mut self, time: f32) {
-        if matches!(self.curve, Curve::None) {
-            self.value = self.destination.clone();
-        } else {
-            self.value = self.origin.lerp(
-                &self.destination,
-                self.curve
-                    .transform(time.min(self.duration) / self.duration),
-            );
+        if time > self.delay {
+            if matches!(self.curve, Curve::None) {
+                self.value = self.destination.clone();
+            } else {
+                self.value = self.origin.lerp(
+                    &self.destination,
+                    self.curve
+                        .transform((time - self.delay).min(self.duration) / self.duration),
+                );
+            }
         }
     }
 }

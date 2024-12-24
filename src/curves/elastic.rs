@@ -2,7 +2,7 @@ use std::f32::consts::PI;
 
 use super::ParametricCurve;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct ElasticInCurve {
     period: f32,
 }
@@ -24,7 +24,7 @@ impl ParametricCurve<f32> for ElasticInCurve {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct ElasticOutCurve {
     period: f32,
 }
@@ -46,7 +46,7 @@ impl ParametricCurve<f32> for ElasticOutCurve {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct ElasticInOutCurve {
     period: f32,
 }

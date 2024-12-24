@@ -1,6 +1,6 @@
 use super::ParametricCurve;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct DecelerateCurve;
 
 impl ParametricCurve<f32> for DecelerateCurve {

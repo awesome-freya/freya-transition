@@ -43,7 +43,7 @@ impl<T: ParametricCurve<f32>> ICurve for T {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub enum Curve {
     None,
     Linear(Linear),

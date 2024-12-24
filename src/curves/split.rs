@@ -1,6 +1,6 @@
 use super::{Curve, ICurve};
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct Split {
     split: f32,
     begin: Curve,

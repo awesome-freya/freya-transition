@@ -1,6 +1,6 @@
 use super::ParametricCurve;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct SawTooth {
     pub(super) count: f32,
 }

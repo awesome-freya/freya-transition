@@ -1,6 +1,6 @@
 use super::ParametricCurve;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct Cubic {
     pub(super) a: f32,
     pub(super) b: f32,

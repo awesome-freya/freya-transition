@@ -1533,7 +1533,7 @@ dependencies = [
 [[package]]
 name = "freya"
 version = "0.2.2"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "dioxus",
  "dioxus-core",
@@ -1556,7 +1556,7 @@ dependencies = [
 [[package]]
 name = "freya-common"
 version = "0.2.1"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "accesskit",
  "dioxus-core",
@@ -1572,7 +1572,7 @@ dependencies = [
 [[package]]
 name = "freya-components"
 version = "0.2.1"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "bytes",
  "dioxus",
@@ -1595,7 +1595,7 @@ dependencies = [
 [[package]]
 name = "freya-core"
 version = "0.2.1"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "accesskit",
  "accesskit_winit",
@@ -1618,7 +1618,7 @@ dependencies = [
 [[package]]
 name = "freya-elements"
 version = "0.2.0"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "dioxus-core",
  "dioxus-rsx",
@@ -1630,7 +1630,7 @@ dependencies = [
 [[package]]
 name = "freya-engine"
 version = "0.2.2"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "bitflags 2.6.0",
  "glutin",
@@ -1640,7 +1640,7 @@ dependencies = [
 [[package]]
 name = "freya-hooks"
 version = "0.2.1"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "bitflags 2.6.0",
  "bytes",
@@ -1665,7 +1665,7 @@ dependencies = [
 [[package]]
 name = "freya-native-core"
 version = "0.2.1"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "dioxus-core",
  "parking_lot",
@@ -1677,7 +1677,7 @@ dependencies = [
 [[package]]
 name = "freya-native-core-macro"
 version = "0.2.0"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "quote",
  "syn 2.0.91",
@@ -1686,7 +1686,7 @@ dependencies = [
 [[package]]
 name = "freya-node-state"
 version = "0.2.1"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "accesskit",
  "bytes",
@@ -1708,7 +1708,7 @@ dependencies = [
 [[package]]
 name = "freya-renderer"
 version = "0.2.1"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "accesskit",
  "accesskit_winit",
@@ -3577,9 +3577,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.37"
+version = "1.0.38"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b5b9d34b8991d19d98081b46eacdd8eb58c6f2b201139f7c5f643cc155a633af"
+checksum = "0e4dccaaaf89514f546c693ddc140f729f958c247918a13380cccc6078391acc"
 dependencies = [
  "proc-macro2",
 ]
@@ -4570,7 +4570,7 @@ dependencies = [
 [[package]]
 name = "torin"
 version = "0.2.0"
-source = "git+https://github.com/marc2332/freya.git#3c69cd1af8bd215cdc975a48f75ac3151855cffa"
+source = "git+https://github.com/marc2332/freya.git?branch=feat%2Fscale-effect#496ad000b66f76a8c63539ea3692b57b589e4c45"
 dependencies = [
  "euclid",
  "freya-native-core",

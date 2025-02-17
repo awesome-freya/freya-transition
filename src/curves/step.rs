@@ -41,4 +41,3 @@ impl ParametricCurve<f32> for Stepped {
         step_time / self.step_count as f32
     }
 }
-

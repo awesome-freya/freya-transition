@@ -27,12 +27,7 @@ impl PathAnimation {
         self
     }
 
-    pub fn insert<V: Into<Value>>(
-        mut self,
-        value: V,
-        curve: Curve,
-        duration: u64,
-    ) -> Self {
+    pub fn insert<V: Into<Value>>(mut self, value: V, curve: Curve, duration: u64) -> Self {
         let last = self
             .segments
             .last()

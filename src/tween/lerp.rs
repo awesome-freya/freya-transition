@@ -1,4 +1,5 @@
 use freya::prelude::Point2D;
+use freya_core::values::{Fill, Shadow};
 use skia_safe::Color;
 
 use super::Value;
@@ -32,12 +33,30 @@ impl Lerp for Color {
     }
 }
 
+impl Lerp for Shadow {
+    fn lerp(&self, end: &Self, x: f32) -> Self {
+        let (Fill::Color(a), Fill::Color(b)) = (&self.fill, &end.fill) else {
+            unimplemented!()
+        };
+
+        Self {
+            position: self.position.clone(),
+            x: self.x.lerp(&end.x, x),
+            y: self.y.lerp(&end.y, x),
+            blur: self.blur.lerp(&end.blur, x),
+            spread: self.spread.lerp(&end.spread, x),
+            fill: Fill::Color(a.lerp(b, x)),
+        }
+    }
+}
+
 impl Lerp for Value {
     fn lerp(&self, end: &Self, x: f32) -> Self {
         match (self, end) {
             (Self::Color(start), Self::Color(end)) => Self::Color(start.lerp(end, x)),
             (Self::Number(start), Self::Number(end)) => Self::Number(start.lerp(end, x)),
             (Self::Point(start), Self::Point(end)) => Self::Point(start.lerp(end, x)),
+            (Self::Shadow(start), Self::Shadow(end)) => Self::Shadow(start.lerp(end, x)),
             _ => unimplemented!("haha"),
         }
     }

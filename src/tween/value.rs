@@ -1,5 +1,8 @@
 use freya::prelude::Point2D;
-use freya_node_state::Parse;
+use freya_core::{
+    parsing::Parse,
+    values::{Fill, Shadow, ShadowPosition},
+};
 use skia_safe::Color;
 
 #[derive(Debug, PartialEq, Clone)]
@@ -8,6 +11,7 @@ pub enum Value {
     Number(f32),
     Gradient(String),
     Point(Point2D),
+    Shadow(Shadow),
 }
 
 #[derive(Default)]
@@ -87,6 +91,28 @@ impl From<Value> for String {
                 color.b(),
                 color.a()
             ),
+            Value::Shadow(shadow) if matches!(shadow.fill, Fill::Color(_)) => {
+                let Fill::Color(color) = shadow.fill else {
+                    unreachable!()
+                };
+
+                format!(
+                    "{}{} {} {} {} rgb({}, {}, {}, {})",
+                    if shadow.position == ShadowPosition::Inset {
+                        "inset "
+                    } else {
+                        ""
+                    },
+                    shadow.x,
+                    shadow.y,
+                    shadow.blur,
+                    shadow.spread,
+                    color.r(),
+                    color.g(),
+                    color.b(),
+                    color.a(),
+                )
+            }
             Value::Gradient(gradient) => gradient,
             _ => unimplemented!(),
         }
@@ -135,7 +161,10 @@ impl From<&str> for Value {
         if value.starts_with("linear") {
             Self::Gradient(value.to_string())
         } else {
-            Self::Color(Color::parse(value).unwrap())
+            Color::parse(value)
+                .map(Self::Color)
+                .or_else(|_| Shadow::parse(value).map(Self::Shadow))
+                .unwrap()
         }
     }
 }
@@ -146,7 +175,10 @@ impl From<String> for Value {
         if value.starts_with("linear") {
             Self::Gradient(value)
         } else {
-            Self::Color(Color::parse(value.as_str()).unwrap())
+            Color::parse(value.as_str())
+                .map(Self::Color)
+                .or_else(|_| Shadow::parse(value.as_str()).map(Self::Shadow))
+                .unwrap()
         }
     }
 }

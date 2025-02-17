@@ -6,6 +6,7 @@ mod interval;
 mod linear;
 mod saw_tooth;
 mod split;
+mod step;
 mod three_point_cubic;
 mod threshold;
 
@@ -20,6 +21,7 @@ pub use self::{
     linear::Linear,
     saw_tooth::SawTooth,
     split::Split,
+    step::Stepped,
     threshold::Threshold,
 };
 
@@ -58,6 +60,7 @@ pub enum Curve {
     ElasticOut(ElasticOutCurve),
     ElasticInOut(ElasticInOutCurve),
     Decelerate(DecelerateCurve),
+    Stepped(Stepped),
 }
 
 impl Curve {
@@ -143,12 +146,25 @@ impl Curve {
     pub const fn saw_tooth(count: f32) -> Self {
         Self::SawTooth(SawTooth { count })
     }
+
+    #[must_use]
+    pub const fn stepped(
+        step_count: usize,
+        is_initial_step_single_frame: bool,
+        is_final_step_single_frame: bool,
+    ) -> Self {
+        Self::Stepped(Stepped {
+            is_initial_step_single_frame,
+            is_final_step_single_frame,
+            step_count,
+        })
+    }
 }
 
 impl ParametricCurve<f32> for Curve {
     fn transform_internal(&self, t: f32) -> f32 {
         match self {
-            Self::None => unimplemented!(),
+            Self::None => 1.0,
             Self::Linear(curve) => curve.transform_internal(t),
             Self::Cubic(curve) => curve.transform_internal(t),
             Self::ThreePointCubic(curve) => curve.transform_internal(t),
@@ -161,6 +177,7 @@ impl ParametricCurve<f32> for Curve {
             Self::ElasticOut(curve) => curve.transform_internal(t),
             Self::ElasticInOut(curve) => curve.transform_internal(t),
             Self::Decelerate(curve) => curve.transform_internal(t),
+            Self::Stepped(curve) => curve.transform_internal(t),
         }
     }
 }

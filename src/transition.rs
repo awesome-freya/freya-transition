@@ -80,6 +80,20 @@ impl Transition {
         tween.write().set_duration(millis);
     }
 
+    pub fn set_curve<K: AsRef<str>>(&self, key: K, curve: Curve) {
+        let context = self.context.peek();
+        let mut tween = *context.tweens.get(key.as_ref()).unwrap();
+
+        tween.write().set_curve(curve);
+    }
+
+    pub fn set_delay<K: AsRef<str>>(&self, key: K, millis: u64) {
+        let context = self.context.peek();
+        let mut tween = *context.tweens.get(key.as_ref()).unwrap();
+
+        tween.write().set_delay(millis);
+    }
+
     pub fn forced_set<K: AsRef<str>, V: Into<Value>>(&self, key: K, value: V) {
         let context = self.context.peek();
         let mut tween = *context.tweens.get(key.as_ref()).unwrap();

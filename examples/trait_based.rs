@@ -1,19 +1,14 @@
 use freya::prelude::*;
-use freya_motion::{use_segmented_animation, Curve};
+use freya_motion::{use_trait_animation, Curve, PathAnimation};
 
 fn main() {
     launch(app);
 }
 
 fn app() -> Element {
-    let animation = use_segmented_animation(|context| {
+    let animation = use_trait_animation(|context| {
         context.add_tween("offset", 0.0);
         context.add_tween("opacity", 0.0);
-
-        context.add_segment("opacity", 0.0, Curve::None, 1000);
-        context.add_segment("opacity", 1.0, Curve::FAST_OUT_SLOW_IN, 1000);
-        context.add_segment("offset", 256.0, Curve::EASE_IN_OUT_CIRC, 500);
-        context.add_segment("opacity", 0.0, Curve::FAST_OUT_SLOW_IN, 1000);
     });
 
     let [offset, opacity] = [
@@ -22,7 +17,17 @@ fn app() -> Element {
     ];
 
     use_hook(move || {
-        animation.play();
+        animation.play(
+            "opacity",
+            PathAnimation::default()
+                .insert(1.0, Curve::FAST_OUT_SLOW_IN, 1000)
+                .insert_delayed(0.0, Curve::FAST_OUT_SLOW_IN, 1000, 500),
+        );
+
+        animation.play(
+            "offset",
+            PathAnimation::default().insert_delayed(256.0, Curve::EASE_IN_OUT_CIRC, 500, 1000),
+        );
     });
 
     rsx! {

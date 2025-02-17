@@ -1,6 +1,7 @@
-use lerp::Lerp;
-pub use value::Value;
-
+pub use self::{
+    lerp::Lerp,
+    value::{Gradient, Value},
+};
 use super::{curves::ICurve, Curve};
 
 pub mod lerp;
@@ -30,6 +31,14 @@ impl Tween {
 
     pub fn set_duration(&mut self, millis: u64) {
         self.duration = millis as f32;
+    }
+
+    pub fn set_curve(&mut self, curve: Curve) {
+        self.curve = curve;
+    }
+
+    pub fn set_delay(&mut self, millis: u64) {
+        self.delay = millis as f32;
     }
 
     pub fn set(&mut self, value: Value) {

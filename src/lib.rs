@@ -1,12 +1,15 @@
+mod animations;
 pub mod curves;
-pub mod segmented_animation;
-pub mod state_based;
-pub mod tween;
-pub mod value_based;
+mod trait_based;
+mod segmented_animation;
+mod tween;
+mod transition;
 
-pub use curves::Curve;
-pub use segmented_animation::use_segmented_animation;
-pub use state_based::use_transition as use_state_transition;
-pub use tween::Tween;
-pub use tween::Value;
-pub use value_based::use_transition;
+pub use self::{
+    animations::{Animation, KeyFrameAnimation, PathAnimation},
+    curves::Curve,
+    trait_based::use_trait_animation,
+    segmented_animation::use_segmented_animation,
+    tween::{Gradient, Lerp, Tween, Value},
+    transition::use_transition,
+};
